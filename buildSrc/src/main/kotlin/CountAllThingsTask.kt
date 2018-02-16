@@ -5,6 +5,7 @@ import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import java.io.File
+import java.util.zip.ZipFile
 
 @CacheableTask
 open class CountAllThingsTask : DefaultTask() {
@@ -20,6 +21,13 @@ open class CountAllThingsTask : DefaultTask() {
 
     @TaskAction
     fun countThings() {
-        countFile.writeText((moreListFiles + listFile).map { it.readText().split(",").size }.sum().toString())
+        countFile.writeText((moreListFiles + listFile).map {
+            println("Counting entries in: ${it.name}")
+            if (it.extension in listOf("zip", "jar", "aar")) {
+                ZipFile(it).size()
+            } else {
+                it.readText().split(",").size
+            }
+        }.sum().toString())
     }
 }

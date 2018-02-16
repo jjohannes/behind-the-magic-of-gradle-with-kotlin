@@ -18,7 +18,6 @@ open class ListAllThingsTask : DefaultTask() {
     fun listThings() {
         list.forEach {
             println(it)
-            Thread.sleep(200)
         }
         listFile.writeText(list.joinToString())
     }
