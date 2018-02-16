@@ -2,12 +2,14 @@ apply {
     plugin("base")
 }
 
-task<ListAllThingsTask>("listThings")
+task<ListAllThingsTask>("listThings") {
+    list = (1..20).toList()
+}
 
 open class ListAllThingsTask : DefaultTask() {
 
     @Input
-    val list = (1..20).toList()
+    lateinit var list: Iterable<Any>
 
     @OutputFile
     val listFile = File(project.buildDir, "listOfThings.txt")
