@@ -2,11 +2,13 @@ apply {
     plugin("base")
 }
 
-task<ListAllThingsTask>("listThings") {
+val listTask = task<ListAllThingsTask>("listThings") {
     list = (1..20).toList()
 }
 
-task<CountAllThingsTask>("countThings")
+task<CountAllThingsTask>("countThings") {
+    dependsOn(listTask)
+}
 
 open class ListAllThingsTask : DefaultTask() {
 
