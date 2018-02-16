@@ -4,9 +4,13 @@ apply {
 
 task("listThings") {
     doLast {
-        (1..20).forEach {
+        val list = 1..20
+        val listFile = File(buildDir, "listOfThings.txt")
+
+        list.forEach {
             println(it)
             Thread.sleep(200)
         }
+        listFile.writeText(list.joinToString())
     }
 }
