@@ -30,9 +30,14 @@ open class ListAllThingsTask : DefaultTask() {
 
 open class CountAllThingsTask : DefaultTask() {
 
+    @InputFile
+    val listFile = File(project.buildDir, "listOfThings.txt")
+
+    @OutputFile
+    val countFile = File(project.buildDir, "count.txt")
+
     @TaskAction
     fun countThings() {
-        val count = File(project.buildDir, "listOfThings.txt").readText().split(",").size
-        File(project.buildDir, "count.txt").writeText(count.toString())
+        countFile.writeText(listFile.readText().split(",").size.toString())
     }
 }
