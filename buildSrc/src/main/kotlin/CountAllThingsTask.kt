@@ -12,11 +12,14 @@ open class CountAllThingsTask : DefaultTask() {
     @InputFiles
     lateinit var listFile: FileCollection
 
+    @InputFiles
+    var moreListFiles: FileCollection = project.files()
+
     @OutputFile
     val countFile = File(project.buildDir, "count.txt")
 
     @TaskAction
     fun countThings() {
-        countFile.writeText(listFile.singleFile.readText().split(",").size.toString())
+        countFile.writeText((moreListFiles + listFile).map { it.readText().split(",").size }.sum().toString())
     }
 }
