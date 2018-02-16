@@ -2,11 +2,18 @@ apply {
     plugin("base")
 }
 
-task("listThings") {
-    doLast {
-        val list = 1..20
-        val listFile = File(buildDir, "listOfThings.txt")
+task<ListAllThingsTask>("listThings")
 
+open class ListAllThingsTask : DefaultTask() {
+
+    @Input
+    val list = (1..20).toList()
+
+    @OutputFile
+    val listFile = File(project.buildDir, "listOfThings.txt")
+
+    @TaskAction
+    fun listThings() {
         list.forEach {
             println(it)
             Thread.sleep(200)
