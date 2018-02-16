@@ -7,7 +7,7 @@ val listTask = task<ListAllThingsTask>("listThings") {
 }
 
 task<CountAllThingsTask>("countThings") {
-    dependsOn(listTask)
+    listFile = listTask.outputs.files
 }
 
 open class ListAllThingsTask : DefaultTask() {
@@ -30,14 +30,14 @@ open class ListAllThingsTask : DefaultTask() {
 
 open class CountAllThingsTask : DefaultTask() {
 
-    @InputFile
-    val listFile = File(project.buildDir, "listOfThings.txt")
+    @InputFiles
+    lateinit var listFile: FileCollection
 
     @OutputFile
     val countFile = File(project.buildDir, "count.txt")
 
     @TaskAction
     fun countThings() {
-        countFile.writeText(listFile.readText().split(",").size.toString())
+        countFile.writeText(listFile.singleFile.readText().split(",").size.toString())
     }
 }
