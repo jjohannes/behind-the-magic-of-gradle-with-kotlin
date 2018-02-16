@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
     "allThings"(project(":moreThings"))
-    "allThings"("com.android.support:support-compat:27.0.2")
+    "androidThings"(project(":moreThings"))
 }
 
 val listThings by tasks.getting(ListAllThingsTask::class) {

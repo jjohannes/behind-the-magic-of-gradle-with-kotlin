@@ -17,7 +17,7 @@ open class CountAllThingsTask : DefaultTask() {
     var moreListFiles: FileCollection = project.files()
 
     @OutputFile
-    val countFile = File(project.buildDir, "count.txt")
+    var countFile = File(project.buildDir, "count.txt")
 
     @TaskAction
     fun countThings() {
