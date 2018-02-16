@@ -1,11 +1,8 @@
 apply {
     plugin("base")
+    plugin<CountAllTheThingsPlugin>()
 }
 
-val listTask = task<ListAllThingsTask>("listThings") {
+val listThings by tasks.getting(ListAllThingsTask::class) {
     list = (1..20).toList()
-}
-
-task<CountAllThingsTask>("countThings") {
-    listFile = listTask.outputs.files
 }
