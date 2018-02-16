@@ -6,9 +6,15 @@ import org.gradle.kotlin.dsl.createTask
 open class CountAllTheThingsPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         with(project) {
+            val allThings = configurations.create("allThings")
+
             val listTask = createTask("listThings", ListAllThingsTask::class) { }
             createTask("countThings", CountAllThingsTask::class) {
                 listFile = listTask.outputs.files
+                moreListFiles = allThings
+            }
+            artifacts.add("default", listTask.listFile) {
+                builtBy(listTask)
             }
         }
     }
